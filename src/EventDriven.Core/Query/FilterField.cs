@@ -8,6 +8,10 @@ public sealed class FilterField
     public string Operation { get; set; }
     public object Value { get; set; }
 
+    public FilterField()
+    {
+
+    }
     public FilterField(string field, string operation, string value)
     {
         if (string.IsNullOrWhiteSpace(field) || string.IsNullOrWhiteSpace(operation) || string.IsNullOrWhiteSpace(value))

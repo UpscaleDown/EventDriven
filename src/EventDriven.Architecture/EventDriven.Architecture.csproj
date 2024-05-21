@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EventDriven.Core\EventDriven.Core.csproj" />
+    <ProjectReference Include="..\EventDriven.Repository\EventDriven.Repository.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

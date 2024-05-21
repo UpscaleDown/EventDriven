@@ -5,9 +5,9 @@ namespace UpscaleDown.EventDriven.Core.Builders;
 
 public class ResourceBuilder
 {
-    private string _provider;
-    private string _origin;
-    private string _entity;
+    private string? _provider;
+    private string? _origin;
+    private string? _entity;
 
     public static ResourceBuilder Provider(string provider)
     {
@@ -37,8 +37,16 @@ public class ResourceBuilder
 
     public string Build()
     {
-        if (_provider == null || _origin == null || _entity == null)
+        if (string.IsNullOrWhiteSpace(_provider) || string.IsNullOrWhiteSpace(_origin) || string.IsNullOrWhiteSpace(_entity))
             throw new InvalidResourceException(Errors.InvalidResourceBuilderCode, Errors.InvalidResourceBuilderMessage);
         return $"{_provider}::{_origin}::{_entity}";
+    }
+
+    public static string Build(Action<ResourceBuilderOptions> options)
+    {
+        var opts = new ResourceBuilderOptions();
+        options(opts);
+        var builder = ResourceBuilder.Provider(opts.Provider).Origin(opts.Origin).Entity(opts.Entity);
+        return builder.Build();
     }
 }

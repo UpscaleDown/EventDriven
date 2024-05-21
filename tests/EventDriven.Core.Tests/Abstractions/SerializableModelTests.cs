@@ -22,7 +22,7 @@ public abstract class SerializableModelTests<T>
         Assert.NotEqual(json, string.Empty);
         foreach (var prop in record.GetType().GetProperties())
         {
-            Assert.Equal(prop.GetValue(record), prop.GetValue(deserialized));
+            Assert.Equivalent(prop.GetValue(record), prop.GetValue(deserialized));
         }
     }
 }

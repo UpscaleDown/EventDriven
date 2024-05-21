@@ -4,7 +4,7 @@ namespace UpscaleDown.EventDriven.Core.Query;
 
 public sealed class Filter
 {
-    public List<FilterField> Fields = new List<FilterField>();
+    public List<FilterField> Fields { get; set; } = new List<FilterField>();
 
     public static Filter Create()
     {

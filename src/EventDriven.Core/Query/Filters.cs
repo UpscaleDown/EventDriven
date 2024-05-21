@@ -3,7 +3,10 @@ namespace UpscaleDown.EventDriven.Core.Query;
 public sealed class Filters
 {
     public List<Filter> Conditions { get; set; } = new List<Filter>();
+    public Filters()
+    {
 
+    }
     public static Filters Filter(Action<Filter> filter)
     {
         var f = new Filter();

@@ -19,52 +19,52 @@ public class RecordService<TRecord> : IRecordService<TRecord> where TRecord : IR
     #endregion
 
     #region Interface Methods
-    public Task<IList<TRecord>> AddManyAsync(IEnumerable<TRecord> records)
+    public async Task<IList<TRecord>> AddManyAsync(IEnumerable<TRecord> records)
     {
         throw new NotImplementedException();
     }
 
-    public Task<TRecord> AddOneAsync(TRecord record)
+    public async Task<TRecord> AddOneAsync(TRecord record)
     {
         throw new NotImplementedException();
     }
 
-    public Task DeleteManyAsync(IEnumerable<TRecord> records)
+    public async Task DeleteManyAsync(IEnumerable<TRecord> records)
     {
         throw new NotImplementedException();
     }
 
-    public Task DeleteManyAsync(IEnumerable<string> ids)
+    public async Task DeleteManyAsync(IEnumerable<string> ids)
     {
         throw new NotImplementedException();
     }
 
-    public Task DeleteOneAsync(TRecord record)
+    public async Task DeleteOneAsync(TRecord record)
     {
         throw new NotImplementedException();
     }
 
-    public Task DeleteOneAsync(string id)
+    public async Task DeleteOneAsync(string id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IList<TRecord>> FindAllAsync(Filters? filters = null)
+    public async Task<IList<TRecord>> FindAllAsync(Filters? filters = null)
     {
         throw new NotImplementedException();
     }
 
-    public Task<TRecord> FindByIdAsync(string id)
+    public async Task<TRecord> FindByIdAsync(string id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IList<TRecord>> UpdateManyAsync(IEnumerable<TRecord> records)
+    public async Task<IList<TRecord>> UpdateManyAsync(IEnumerable<TRecord> records)
     {
         throw new NotImplementedException();
     }
 
-    public Task<TRecord> UpdateOneAsync()
+    public async Task<TRecord> UpdateOneAsync()
     {
         throw new NotImplementedException();
     }

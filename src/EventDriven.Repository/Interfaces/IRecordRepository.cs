@@ -8,8 +8,8 @@ public interface IRecordRepository<T> where T : IRecord
     public string Resource { get; }
     public T FindById(string id);
     public Task<T> FindByIdAsync(string id);
-    public IList<T> FindAll(Filters? filters = null);
-    public Task<IList<T>> FindAllAsync(Filters? filters = null);
+    public IList<T> FindAll(Filters? filters = null, Pagination? pagination = null);
+    public Task<IList<T>> FindAllAsync(Filters? filters = null, Pagination? pagination = null);
     public T AddOne(T record);
     public Task<T> AddOneAsync(T record);
     public IList<T> AddMany(IEnumerable<T> records);

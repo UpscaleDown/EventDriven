@@ -1,7 +1,7 @@
-using UpscaleDown.EventDriven.Architecture.Configuration;
 using UpscaleDown.EventDriven.Architecture.Extensions;
-using UpscaleDown.EventDriven.Providers.Mongo;
+using UpscaleDown.EventDriven.Providers.Data.Mongo;
 using UpscaleDown.EventDriven.Samples.SimpleMicroService.Models;
+using UpscaleDown.EventDriven.Providers.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,16 +29,16 @@ builder.Services.SetupEventDriven(opts =>
 builder.Services.SetupWithMongoDb(opts =>
 {
     opts.MONGODB_URI = "mongo://test:pass@host/?retryWrites=true&w=majority";
-});
-
-// #TODO: setup event bus provider (azure, rabbit, signalr, ...)
-
-
-// For each of your record types add this line
-builder.Services.AddRecordServices<SampleRecord, MongoRecordRepository<SampleRecord>>();
-
-// For each of your node types add this line
-builder.Services.AddNodeRecordServices<SampleNode, MongoNodeRepository<SampleNode>>();
+})
+.AddMongoRecordService<SampleRecord>()
+.AddMongoNodeService<SampleNode>()
+.SetupWithRabbitMQ(opts =>
+{
+    opts.HOST = "rabbitmq";
+    opts.EnableRetryOnFailure(1, 2000);
+})
+.AddRabbitEventPublisher<SampleRecord>()
+.AddRabbitEventPublisher<SampleNode>();
 
 // #TODO: setup event consumers
 var app = builder.Build();

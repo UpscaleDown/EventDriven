@@ -16,5 +16,5 @@ public interface IEventConsumer<T> where T : IRecord
 
     public Task OnRemovedManyAsync(IEnumerable<T> removed);
 
-    public Task OnOtherAsync(IEnumerable<T> other);
+    public Task OnOtherAsync(string resource, string opreation, IEnumerable<T> other);
 }

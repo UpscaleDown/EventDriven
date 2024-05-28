@@ -4,9 +4,13 @@ namespace UpscaleDown.EventDriven.Events;
 
 public interface IEvent<T> where T : IRecord
 {
+    public string Guid { get; set; }
+
+    public DateTime Date { get; set; }
+
     public string Resource { get; set; }
 
-    public string Operation { get; set; }
+    public string Type { get; set; }
 
-    public T Data { get; set; }
+    public object Data { get; set; }
 }

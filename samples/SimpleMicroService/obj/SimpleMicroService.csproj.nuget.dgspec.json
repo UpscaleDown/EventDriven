@@ -107,6 +107,9 @@
               "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Core/EventDriven.Core.csproj": {
                 "projectPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Core/EventDriven.Core.csproj"
               },
+              "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Events/EventDriven.Events.csproj": {
+                "projectPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Events/EventDriven.Events.csproj"
+              },
               "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Repository/EventDriven.Repository.csproj": {
                 "projectPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Repository/EventDriven.Repository.csproj"
               }
@@ -181,6 +184,68 @@
             "projectReferences": {
               "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Exceptions/EventDriven.Exceptions.csproj": {
                 "projectPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Exceptions/EventDriven.Exceptions.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.202/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Events/EventDriven.Events.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Events/EventDriven.Events.csproj",
+        "projectName": "EventDriven.Events",
+        "projectPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Events/EventDriven.Events.csproj",
+        "packagesPath": "/Users/eer/.nuget/packages/",
+        "outputPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Events/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/eer/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Core/EventDriven.Core.csproj": {
+                "projectPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Core/EventDriven.Core.csproj"
               }
             }
           }
@@ -302,6 +367,9 @@
               "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Architecture/EventDriven.Architecture.csproj": {
                 "projectPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Architecture/EventDriven.Architecture.csproj"
               },
+              "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Events/EventDriven.Events.csproj": {
+                "projectPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Events/EventDriven.Events.csproj"
+              },
               "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Repository/EventDriven.Repository.csproj": {
                 "projectPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Repository/EventDriven.Repository.csproj"
               }
@@ -330,6 +398,10 @@
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[2.25.0, )"
+            },
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[6.8.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

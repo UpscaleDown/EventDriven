@@ -1,6 +1,7 @@
 using UpscaleDown.EventDriven.Architecture.Interfaces.Services;
 using UpscaleDown.EventDriven.Core.Interfaces.Entities;
 using UpscaleDown.EventDriven.Core.Query;
+using UpscaleDown.EventDriven.Events;
 using UpscaleDown.EventDriven.Repository.Interfaces;
 
 namespace UpscaleDown.EventDriven.Architecture.Services;
@@ -8,13 +9,15 @@ namespace UpscaleDown.EventDriven.Architecture.Services;
 public class RecordService<TRecord> : IRecordService<TRecord> where TRecord : IRecord
 {
     #region Private Members
-    private readonly IRecordRepository<TRecord> _repository;
+    protected readonly IRecordRepository<TRecord> _repository;
+    protected readonly IEventPublisher<TRecord> _publisher;
     #endregion
 
     #region Constructors
-    public RecordService(IRecordRepository<TRecord> repository)
+    public RecordService(IRecordRepository<TRecord> repository, IEventPublisher<TRecord> publisher = null!)
     {
         _repository = repository;
+        _publisher = publisher;
     }
     #endregion
 
@@ -70,4 +73,10 @@ public class RecordService<TRecord> : IRecordService<TRecord> where TRecord : IR
     }
     #endregion
 
+    #region Private methods
+    private void PublishEvent(string type, TRecord data)
+    {
+        if (_publisher == null) return;
+    }
+    #endregion
 }

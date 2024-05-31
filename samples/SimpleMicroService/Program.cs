@@ -1,23 +1,18 @@
-using UpscaleDown.EventDriven.Architecture.Extensions;
-using UpscaleDown.EventDriven.Providers.Data.Mongo;
 using UpscaleDown.EventDriven.Samples.SimpleMicroService.Models;
 using UpscaleDown.EventDriven.Providers.Extensions;
+using UpscaleDown.EventDriven.Core;
+using UpscaleDown.EventDriven.Core.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
-
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 // First let's setup event driven itself
-builder.Services.SetupEventDriven(opts =>
+var eventDriven = EventDriven.Create(args, opts =>
 {
     // ORIGIN should be the name of you micro-service
-    opts.ORIGIN = "simple1";
+    opts.Origin = "simple1";
 
     /// depending on your architecture PROVIDER can be usefull or not. 
     /// If you don't know what to do with it, just leave it to 'server'
-    opts.PROVIDER = "server";
+    opts.Provider = "server";
 
     /// If you want to you can setup authentication here
     // opts.AuthOptions = new AuthOptions{
@@ -26,7 +21,7 @@ builder.Services.SetupEventDriven(opts =>
 });
 
 // now let's setup the database provider (in this case MongoDB)
-builder.Services.SetupWithMongoDb(opts =>
+eventDriven.SetupWithMongoDb(opts =>
 {
     opts.MONGODB_URI = "mongo://test:pass@host/?retryWrites=true&w=majority";
 })
@@ -40,18 +35,4 @@ builder.Services.SetupWithMongoDb(opts =>
 .AddRabbitEventPublisher<SampleRecord>()
 .AddRabbitEventPublisher<SampleNode>();
 
-// #TODO: setup event consumers
-var app = builder.Build();
-
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
-app.MapControllers();
-
-app.Run();
+eventDriven.Run();

@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using UpscaleDown.EventDriven.Architecture.Configuration;
-using UpscaleDown.EventDriven.Core.Builders;
-using UpscaleDown.EventDriven.Core.Interfaces.Entities;
+using UpscaleDown.EventDriven.Repository.Builders;
+using UpscaleDown.EventDriven.Repository.Interfaces.Entities;
 using UpscaleDown.EventDriven.Events;
 using UpscaleDown.EventDriven.Events.Constants;
 
@@ -35,19 +35,20 @@ public class RabbitEventPublisher<T> : IEventPublisher<T> where T : IRecord
     public RabbitEventPublisher(RabbitMQOptions rbOptions, EventDrivenOptions options, ILogger<RabbitEventPublisher<T>> logger)
     {
         _resource = ResourceBuilder
-        .Provider(options.PROVIDER)
-        .Origin(options.ORIGIN)
+        .Provider(options.Provider)
+        .Origin(options.Origin)
         .Entity<T>()
         .Build();
 
         _options = rbOptions;
         _logger = logger;
+        _factory = new ConnectionFactory { HostName = _options.HOST };
     }
 
     #region Interface implementation
     public async Task PublishAddedAsync(T added)
     {
-        var @event = new Event<T>()
+        var @event = new Events.Event()
         {
             Guid = Guid.NewGuid().ToString(),
             Data = added,
@@ -55,12 +56,12 @@ public class RabbitEventPublisher<T> : IEventPublisher<T> where T : IRecord
             Type = EventTypes.Added,
         };
 
-        Publish(@event);
+        await Publish(@event);
     }
 
     public async Task PublishAddedManyAsync(IEnumerable<T> added)
     {
-        var @event = new Event<T>()
+        var @event = new Events.Event()
         {
             Guid = Guid.NewGuid().ToString(),
             Data = added,
@@ -68,12 +69,12 @@ public class RabbitEventPublisher<T> : IEventPublisher<T> where T : IRecord
             Type = EventTypes.AddedMany,
         };
 
-        Publish(@event);
+        await Publish(@event);
     }
 
     public async Task PublishOtherAsync(string type, IEnumerable<T> other)
     {
-        var @event = new Event<T>()
+        var @event = new Events.Event()
         {
             Guid = Guid.NewGuid().ToString(),
             Data = other,
@@ -81,12 +82,12 @@ public class RabbitEventPublisher<T> : IEventPublisher<T> where T : IRecord
             Type = type,
         };
 
-        Publish(@event);
+        await Publish(@event);
     }
 
     public async Task PublishRemovedAsync(T removed)
     {
-        var @event = new Event<T>()
+        var @event = new Events.Event()
         {
             Guid = Guid.NewGuid().ToString(),
             Data = removed,
@@ -94,12 +95,12 @@ public class RabbitEventPublisher<T> : IEventPublisher<T> where T : IRecord
             Type = EventTypes.Removed,
         };
 
-        Publish(@event);
+        await Publish(@event);
     }
 
     public async Task PublishRemovedManyAsync(IEnumerable<T> removed)
     {
-        var @event = new Event<T>()
+        var @event = new Events.Event()
         {
             Guid = Guid.NewGuid().ToString(),
             Data = removed,
@@ -107,12 +108,12 @@ public class RabbitEventPublisher<T> : IEventPublisher<T> where T : IRecord
             Type = EventTypes.RemovedMany,
         };
 
-        Publish(@event);
+        await Publish(@event);
     }
 
     public async Task PublishUpdatedAsync(T updated)
     {
-        var @event = new Event<T>()
+        var @event = new Events.Event()
         {
             Guid = Guid.NewGuid().ToString(),
             Data = updated,
@@ -120,12 +121,12 @@ public class RabbitEventPublisher<T> : IEventPublisher<T> where T : IRecord
             Type = EventTypes.Updated,
         };
 
-        Publish(@event);
+        await Publish(@event);
     }
 
     public async Task PublishUpdatedManyAsync(IEnumerable<T> updated)
     {
-        var @event = new Event<T>()
+        var @event = new Events.Event()
         {
             Guid = Guid.NewGuid().ToString(),
             Data = updated,
@@ -133,12 +134,12 @@ public class RabbitEventPublisher<T> : IEventPublisher<T> where T : IRecord
             Type = EventTypes.UpdatedMany,
         };
 
-        Publish(@event);
+        await Publish(@event);
     }
     #endregion
 
     #region Private methods
-    private void UseTempChannelAsync(Action<IModel> func)
+    private void UseTempChannel(Action<IModel> func)
     {
         using var connection = _factory.CreateConnection();
         using var channel = connection.CreateModel();
@@ -156,13 +157,13 @@ public class RabbitEventPublisher<T> : IEventPublisher<T> where T : IRecord
         func(channel);
     }
 
-    private async Task Publish(Event<T> @event)
+    private async Task Publish(Events.Event @event)
     {
         var counter = 0;
-    A:
+        A:
         try
         {
-            UseTempChannelAsync((channel) =>
+            UseTempChannel((channel) =>
             {
                 var json = JsonSerializer.Serialize(@event, _jsonSerializerOptions);
                 var body = Encoding.UTF8.GetBytes(json);

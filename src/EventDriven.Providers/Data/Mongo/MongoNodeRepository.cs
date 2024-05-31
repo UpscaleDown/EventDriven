@@ -1,6 +1,6 @@
 using MongoDB.Driver;
 using UpscaleDown.EventDriven.Architecture.Configuration;
-using UpscaleDown.EventDriven.Core.Interfaces.Entities;
+using UpscaleDown.EventDriven.Repository.Interfaces.Entities;
 using UpscaleDown.EventDriven.Repository.Interfaces;
 
 namespace UpscaleDown.EventDriven.Providers.Data.Mongo;

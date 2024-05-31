@@ -104,9 +104,6 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Core/EventDriven.Core.csproj": {
-                "projectPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Core/EventDriven.Core.csproj"
-              },
               "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Events/EventDriven.Events.csproj": {
                 "projectPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Events/EventDriven.Events.csproj"
               },
@@ -182,8 +179,14 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Exceptions/EventDriven.Exceptions.csproj": {
-                "projectPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Exceptions/EventDriven.Exceptions.csproj"
+              "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Architecture/EventDriven.Architecture.csproj": {
+                "projectPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Architecture/EventDriven.Architecture.csproj"
+              },
+              "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Events/EventDriven.Events.csproj": {
+                "projectPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Events/EventDriven.Events.csproj"
+              },
+              "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Repository/EventDriven.Repository.csproj": {
+                "projectPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Repository/EventDriven.Repository.csproj"
               }
             }
           }
@@ -202,6 +205,16 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[8.0.3, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -244,8 +257,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Core/EventDriven.Core.csproj": {
-                "projectPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Core/EventDriven.Core.csproj"
+              "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Repository/EventDriven.Repository.csproj": {
+                "projectPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Repository/EventDriven.Repository.csproj"
               }
             }
           }
@@ -264,6 +277,12 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[8.0.3, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -367,6 +386,9 @@
               "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Architecture/EventDriven.Architecture.csproj": {
                 "projectPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Architecture/EventDriven.Architecture.csproj"
               },
+              "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Core/EventDriven.Core.csproj": {
+                "projectPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Core/EventDriven.Core.csproj"
+              },
               "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Events/EventDriven.Events.csproj": {
                 "projectPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Events/EventDriven.Events.csproj"
               },
@@ -450,8 +472,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Core/EventDriven.Core.csproj": {
-                "projectPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Core/EventDriven.Core.csproj"
+              "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Exceptions/EventDriven.Exceptions.csproj": {
+                "projectPath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/src/EventDriven.Exceptions/EventDriven.Exceptions.csproj"
               }
             }
           }

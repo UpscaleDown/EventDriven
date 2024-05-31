@@ -1,5 +1,5 @@
-using UpscaleDown.EventDriven.Core.Interfaces.Entities;
-using UpscaleDown.EventDriven.Core.Query;
+using UpscaleDown.EventDriven.Repository.Interfaces.Entities;
+using UpscaleDown.EventDriven.Repository.Query;
 
 namespace UpscaleDown.EventDriven.Architecture.Interfaces.Services;
 

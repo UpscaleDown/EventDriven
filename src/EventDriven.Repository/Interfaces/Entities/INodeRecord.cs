@@ -1,4 +1,4 @@
-namespace UpscaleDown.EventDriven.Core.Interfaces.Entities;
+namespace UpscaleDown.EventDriven.Repository.Interfaces.Entities;
 
 public interface INodeRecord : IRecord
 {

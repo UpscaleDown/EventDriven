@@ -1,6 +1,6 @@
 using UpscaleDown.EventDriven.Exceptions;
 
-namespace UpscaleDown.EventDriven.Core.Query;
+namespace UpscaleDown.EventDriven.Repository.Query;
 
 public sealed class FilterField
 {

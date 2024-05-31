@@ -1,7 +1,7 @@
-using UpscaleDown.EventDriven.Core.Interfaces.Entities;
+using UpscaleDown.EventDriven.Repository.Interfaces.Entities;
 using UpscaleDown.EventDriven.Exceptions;
 
-namespace UpscaleDown.EventDriven.Core.Builders;
+namespace UpscaleDown.EventDriven.Repository.Builders;
 
 public class ResourceBuilder
 {

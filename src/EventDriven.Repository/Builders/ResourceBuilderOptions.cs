@@ -1,4 +1,4 @@
-namespace UpscaleDown.EventDriven.Core.Builders;
+namespace UpscaleDown.EventDriven.Repository.Builders;
 
 public sealed class ResourceBuilderOptions
 {

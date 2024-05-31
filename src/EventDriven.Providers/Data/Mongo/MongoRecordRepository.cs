@@ -1,8 +1,8 @@
 using MongoDB.Driver;
 using UpscaleDown.EventDriven.Architecture.Configuration;
-using UpscaleDown.EventDriven.Core.Builders;
-using UpscaleDown.EventDriven.Core.Interfaces.Entities;
-using UpscaleDown.EventDriven.Core.Query;
+using UpscaleDown.EventDriven.Repository.Builders;
+using UpscaleDown.EventDriven.Repository.Interfaces.Entities;
+using UpscaleDown.EventDriven.Repository.Query;
 using UpscaleDown.EventDriven.Repository.Interfaces;
 
 namespace UpscaleDown.EventDriven.Providers.Data.Mongo;
@@ -16,12 +16,12 @@ public class MongoRecordRepository<T> : IRecordRepository<T> where T : IRecord
     public MongoRecordRepository(MongoClient client, EventDrivenOptions options)
     {
         Resource = ResourceBuilder
-        .Provider(options.PROVIDER)
-        .Origin(options.ORIGIN)
+        .Provider(options.Provider)
+        .Origin(options.Origin)
         .Entity<T>()
         .Build();
 
-        _database = client.GetDatabase(options.ORIGIN.ToLowerInvariant());
+        _database = client.GetDatabase(options.Origin.ToLowerInvariant());
         _collection = _database.GetCollection<T>(typeof(T).Name.ToLowerInvariant());
 
     }

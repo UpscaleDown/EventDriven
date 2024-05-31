@@ -1,16 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\EventDriven.Repository\EventDriven.Repository.csproj" />
-    <ProjectReference Include="..\EventDriven.Architecture\EventDriven.Architecture.csproj" />
-    <ProjectReference Include="..\EventDriven.Events\EventDriven.Events.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="MongoDB.Driver" Version="2.25.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.3" />
     <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EventDriven.Events\EventDriven.Events.csproj" />
+    <ProjectReference Include="..\EventDriven.Repository\EventDriven.Repository.csproj" />
+    <ProjectReference Include="..\EventDriven.Architecture\EventDriven.Architecture.csproj" />
+    <ProjectReference Include="..\EventDriven.Core\EventDriven.Core.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

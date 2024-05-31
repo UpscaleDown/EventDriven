@@ -1,6 +1,6 @@
-using UpscaleDown.EventDriven.Core.Constants;
+using UpscaleDown.EventDriven.Repository.Constants;
 
-namespace UpscaleDown.EventDriven.Core.Query;
+namespace UpscaleDown.EventDriven.Repository.Query;
 
 public sealed class Filter
 {

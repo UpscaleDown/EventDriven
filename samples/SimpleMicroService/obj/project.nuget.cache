@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "McrJf19HwXGztvcR/XmORO7fqQWBc0Am1uZkUon9QY2Q+qd1XtIk8u3S0R/uNC38lzaP5jDAKb6HuR24y1qHIg==",
+  "dgSpecHash": "YLhHwHwrfQec/ayWpE7dD1RksUIAN5ZOHEaIiG+g42RfHpYo7WgxNbyznNf/VFrltFIboCsHZOKNLVHD/q6IrA==",
   "success": true,
   "projectFilePath": "/Users/eer/Projects/UpscaleDown/Frameworks/EventDriven/samples/SimpleMicroService/SimpleMicroService.csproj",
   "expectedPackageFiles": [

@@ -1,8 +1,8 @@
-using UpscaleDown.EventDriven.Core.Interfaces.Entities;
+using UpscaleDown.EventDriven.Repository.Interfaces.Entities;
 
 namespace UpscaleDown.EventDriven.Events;
 
-public class Event<T> : IEvent<T> where T : IRecord
+public class Event: IEvent
 {
     public string Guid { get; set; }
 

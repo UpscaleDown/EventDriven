@@ -436,7 +436,6 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
-          "EventDriven.Core": "1.0.0",
           "EventDriven.Events": "1.0.0",
           "EventDriven.Repository": "1.0.0",
           "Microsoft.AspNetCore.OpenApi": "8.0.3",
@@ -453,7 +452,11 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
-          "EventDriven.Exceptions": "1.0.0"
+          "EventDriven.Architecture": "1.0.0",
+          "EventDriven.Events": "1.0.0",
+          "EventDriven.Repository": "1.0.0",
+          "Microsoft.AspNetCore.OpenApi": "8.0.3",
+          "Swashbuckle.AspNetCore": "6.4.0"
         },
         "compile": {
           "bin/placeholder/EventDriven.Core.dll": {}
@@ -466,7 +469,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
-          "EventDriven.Core": "1.0.0"
+          "EventDriven.Repository": "1.0.0",
+          "Microsoft.AspNetCore.OpenApi": "8.0.3"
         },
         "compile": {
           "bin/placeholder/EventDriven.Events.dll": {}
@@ -490,6 +494,7 @@
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "EventDriven.Architecture": "1.0.0",
+          "EventDriven.Core": "1.0.0",
           "EventDriven.Events": "1.0.0",
           "EventDriven.Repository": "1.0.0",
           "Microsoft.AspNetCore.OpenApi": "8.0.3",
@@ -508,7 +513,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
-          "EventDriven.Core": "1.0.0"
+          "EventDriven.Exceptions": "1.0.0"
         },
         "compile": {
           "bin/placeholder/EventDriven.Repository.dll": {}

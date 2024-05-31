@@ -1,4 +1,4 @@
-namespace UpscaleDown.EventDriven.Core.Query;
+namespace UpscaleDown.EventDriven.Repository.Query;
 
 public sealed class Pagination
 {

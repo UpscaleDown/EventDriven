@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using UpscaleDown.EventDriven.Architecture.Configuration;
 using UpscaleDown.EventDriven.Core.Builders;
@@ -20,6 +21,8 @@ public class RabbitEventPublisher<T> : IEventPublisher<T> where T : IRecord
 
     private readonly ConnectionFactory _factory;
 
+    private readonly ILogger<RabbitEventPublisher<T>> _logger;
+
     private readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions()
     {
         ReferenceHandler = ReferenceHandler.IgnoreCycles,
@@ -29,7 +32,7 @@ public class RabbitEventPublisher<T> : IEventPublisher<T> where T : IRecord
     };
     #endregion
 
-    public RabbitEventPublisher(RabbitMQOptions rbOptions, EventDrivenOptions options)
+    public RabbitEventPublisher(RabbitMQOptions rbOptions, EventDrivenOptions options, ILogger<RabbitEventPublisher<T>> logger)
     {
         _resource = ResourceBuilder
         .Provider(options.PROVIDER)
@@ -38,6 +41,7 @@ public class RabbitEventPublisher<T> : IEventPublisher<T> where T : IRecord
         .Build();
 
         _options = rbOptions;
+        _logger = logger;
     }
 
     #region Interface implementation
@@ -152,15 +156,35 @@ public class RabbitEventPublisher<T> : IEventPublisher<T> where T : IRecord
         func(channel);
     }
 
-    private void Publish(Event<T> @event)
+    private async Task Publish(Event<T> @event)
     {
-        UseTempChannelAsync((channel) =>
+        var counter = 0;
+    A:
+        try
         {
-            var json = JsonSerializer.Serialize(@event, _jsonSerializerOptions);
-            var body = Encoding.UTF8.GetBytes(json);
+            UseTempChannelAsync((channel) =>
+            {
+                var json = JsonSerializer.Serialize(@event, _jsonSerializerOptions);
+                var body = Encoding.UTF8.GetBytes(json);
 
-            channel.BasicPublish("eventdriven.broadcast", _resource, channel.CreateBasicProperties(), body);
-        });
+                channel.BasicPublish("eventdriven.broadcast", _resource, channel.CreateBasicProperties(), body);
+            });
+        }
+        catch (Exception ex)
+        {
+            if (_options.RetryCount > 0)
+            {
+                if (counter < _options.RetryCount)
+                {
+                    counter++;
+                    await Task.Delay(_options.RetryDelay);
+                    goto A;
+                }
+            }
+
+            _logger.LogError(ex.Message);
+        }
+
     }
     #endregion
 }

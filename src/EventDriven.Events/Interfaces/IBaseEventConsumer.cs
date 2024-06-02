@@ -1,6 +1,4 @@
-using UpscaleDown.EventDriven.Repository.Interfaces.Entities;
-
-namespace UpscaleDown.EventDriven.Events;
+namespace UpscaleDown.EventDriven.Events.Interfaces;
 
 public interface IBaseEventConsumer
 {

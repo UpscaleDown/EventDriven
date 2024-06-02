@@ -2,7 +2,7 @@ namespace UpscaleDown.EventDriven.Providers.Event.RabbitMQ;
 
 public class RabbitMQOptions
 {
-    public string HOST { get; set; }
+    public string Host { get; set; }
 
     internal int RetryCount = -1;
     internal int RetryDelay = -1;

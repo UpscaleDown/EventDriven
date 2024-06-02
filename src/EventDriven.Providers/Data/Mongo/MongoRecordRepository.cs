@@ -124,4 +124,14 @@ public class MongoRecordRepository<T> : IRecordRepository<T> where T : IRecord
     {
         throw new NotImplementedException();
     }
+
+    public IEnumerable<FinalType> Query<FinalType>(Func<FinalType, bool> exp) where FinalType : T
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IEnumerable<FinalType>> QueryAsync<FinalType>(Func<FinalType, bool> exp) where FinalType : T
+    {
+        throw new NotImplementedException();
+    }
 }

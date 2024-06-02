@@ -1,9 +1,11 @@
+using UpscaleDown.EventDriven.Repository.Interfaces;
 using UpscaleDown.EventDriven.Repository.Interfaces.Entities;
 
 namespace UpscaleDown.EventDriven.Events;
 
 public interface IEventConsumer<T> : IBaseEventConsumer where T : IRecord
 {
+    protected IRecordRepository<T> _recordRepository { get; }
     public Task OnAddedAsync(T added);
 
     public Task OnUpdatedAsync(T updated);

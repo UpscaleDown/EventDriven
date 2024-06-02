@@ -7,6 +7,7 @@ using UpscaleDown.EventDriven.Providers.Data.Mongo.Configuration;
 using UpscaleDown.EventDriven.Providers.Event.RabbitMQ;
 using UpscaleDown.EventDriven.Architecture.Extensions;
 using UpscaleDown.EventDriven.Core;
+using UpscaleDown.EventDriven.Events.Interfaces;
 
 namespace UpscaleDown.EventDriven.Providers.Extensions;
 
@@ -70,7 +71,7 @@ public static class EventDrivenExtensions
     {
         var services = ev.Services;
         if (!_rabbitSetup) throw new Exception("You must setup rabbitmq before adding consumers");
-        services.AddSingleton<IBaseEventConsumer, RabbitMQEventConsumer<T>>();
+        services.AddSingleton<IBaseEventConsumer, RabbitEventConsumer<T>>();
         return ev;
     }
     #endregion

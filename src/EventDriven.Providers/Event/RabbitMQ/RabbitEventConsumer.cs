@@ -6,12 +6,12 @@ using RabbitMQ.Client;
 using UpscaleDown.EventDriven.Architecture.Configuration;
 using UpscaleDown.EventDriven.Repository.Builders;
 using UpscaleDown.EventDriven.Repository.Interfaces.Entities;
-using UpscaleDown.EventDriven.Events;
-using UpscaleDown.EventDriven.Events.Constants;
+using UpscaleDown.EventDriven.Events.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace UpscaleDown.EventDriven.Providers.Event.RabbitMQ;
 
-public class RabbitMQEventConsumer<T> : IEventConsumer<T> where T : IRecord
+public class RabbitEventConsumer<T> : IEventConsumer<T> where T : IRecord
 {
     #region Private members
     private readonly string _resource;
@@ -20,7 +20,7 @@ public class RabbitMQEventConsumer<T> : IEventConsumer<T> where T : IRecord
 
     private readonly ConnectionFactory _factory;
 
-    private readonly ILogger<RabbitMQEventConsumer<T>> _logger;
+    private readonly ILogger<RabbitEventConsumer<T>> _logger;
 
     private readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions()
     {
@@ -29,56 +29,25 @@ public class RabbitMQEventConsumer<T> : IEventConsumer<T> where T : IRecord
         DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     };
+
+    private readonly IServiceProvider _serviceProvider;
     #endregion
     #region Constructors
-    public RabbitMQEventConsumer(RabbitMQOptions rbOptions, EventDrivenOptions options, ILogger<RabbitMQEventConsumer<T>> logger)
+    public RabbitEventConsumer(Core.EventDriven ev, RabbitMQOptions rbOptions, EventDrivenOptions options, ILogger<RabbitEventConsumer<T>> logger)
     {
         _resource = ResourceBuilder
-        .Provider(options.Provider)
-        .Origin(options.Origin)
+        .Provider("*")
+        .Origin("*")
         .Entity<T>()
-        .Build();
+        .BuildTopic();
 
         _options = rbOptions;
         _logger = logger;
-        _factory = new ConnectionFactory { HostName = _options.HOST };
+        _factory = new ConnectionFactory { HostName = _options.Host };
+        _serviceProvider = ev.GetServiceProvider();
     }
     #endregion
     #region Interface methods
-    public Task OnAddedAsync(T added)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task OnAddedManyAsync(IEnumerable<T> added)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task OnOtherAsync(string type, IEnumerable<T> other)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task OnRemovedAsync(T removed)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task OnRemovedManyAsync(IEnumerable<T> removed)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task OnUpdatedAsync(T updated)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task OnUpdatedManyAsync(IEnumerable<T> updated)
-    {
-        throw new NotImplementedException();
-    }
 
     public async Task ListenAsync(CancellationToken cancellationToken)
     {
@@ -88,36 +57,9 @@ public class RabbitMQEventConsumer<T> : IEventConsumer<T> where T : IRecord
             UseTempChannel((channel) =>
             {
                 var consumer = new MessageReceiver<T>(channel);
-                consumer.OnReceive += (content) =>
+                consumer.OnReceive += async (content) =>
                 {
-                    try
-                    {
-                        switch (content.Type)
-                        {
-                            case EventTypes.Added: OnAddedAsync((T)content.Data!); break;
-                            case EventTypes.Updated: OnUpdatedAsync((T)content.Data!); break;
-                            case EventTypes.Removed: OnRemovedAsync((T)content.Data!); break;
-                            case EventTypes.AddedMany: OnAddedManyAsync((List<T>)content.Data!); break;
-                            case EventTypes.UpdatedMany: OnUpdatedManyAsync((List<T>)content.Data!); break;
-                            case EventTypes.RemovedMany: OnRemovedManyAsync((List<T>)content.Data!); break;
-                            default:
-                                if (typeof(List<T>).IsAssignableFrom(content.Data!.GetType()))
-                                {
-                                    OnOtherAsync(content.Type, (List<T>)content.Data!);
-                                    break;
-                                }
-                                var l = new List<T>
-                            {
-                                (T)content.Data!
-                            };
-                                OnOtherAsync(content.Type, l);
-                                break;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogError(ex.Message, ex);
-                    }
+                    await PublishToHandlersAsync(content);
                 };
 
                 // consumer.OnJson += (json) =>
@@ -154,6 +96,33 @@ public class RabbitMQEventConsumer<T> : IEventConsumer<T> where T : IRecord
         channel.QueueBind(queueName, "eventdriven.broadcast", _resource);
 
         func(channel);
+    }
+
+    private async Task PublishToHandlersAsync(Events.Event @event)
+    {
+        var svcs = _serviceProvider.GetKeyedServices<IEventHandler<T>>(@event.Type);
+
+        if (svcs == null || svcs.Count() == 0) return;
+
+        foreach (var svc in svcs)
+        {
+            try
+            {
+                if (typeof(List<T>).IsAssignableFrom(@event.Data!.GetType()))
+                {
+                    await svc.HandleAsync((List<T>)@event.Data!, @event);
+                    continue;
+                }
+                await svc.HandleAsync((T)@event.Data!, @event);
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex.Message, ex);
+            }
+
+
+        }
     }
     #endregion
 }

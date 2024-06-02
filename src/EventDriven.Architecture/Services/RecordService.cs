@@ -3,6 +3,7 @@ using UpscaleDown.EventDriven.Repository.Interfaces.Entities;
 using UpscaleDown.EventDriven.Repository.Query;
 using UpscaleDown.EventDriven.Events;
 using UpscaleDown.EventDriven.Repository.Interfaces;
+using UpscaleDown.EventDriven.Events.Interfaces;
 
 namespace UpscaleDown.EventDriven.Architecture.Services;
 

@@ -42,6 +42,13 @@ public class ResourceBuilder
         return $"{_provider}::{_origin}::{_entity}";
     }
 
+    public string BuildTopic()
+    {
+        if (string.IsNullOrWhiteSpace(_provider) || string.IsNullOrWhiteSpace(_origin) || string.IsNullOrWhiteSpace(_entity))
+            throw new InvalidResourceException(Errors.InvalidResourceBuilderCode, Errors.InvalidResourceBuilderMessage);
+        return $"{_provider}.{_origin}.{_entity}";
+    }
+
     public static string Build(Action<ResourceBuilderOptions> options)
     {
         var opts = new ResourceBuilderOptions();

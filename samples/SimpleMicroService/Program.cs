@@ -6,6 +6,7 @@ using UpscaleDown.EventDriven.Events.Constants;
 
 
 // First let's setup event driven itself
+// If you don't provide opts here event driven will try to pull the options from the configuration
 var eventDriven = EventDriven.Create(args, opts =>
 {
     // ORIGIN should be the name of you micro-service
@@ -22,10 +23,7 @@ var eventDriven = EventDriven.Create(args, opts =>
 });
 
 // now let's setup the database provider (in this case MongoDB)
-eventDriven.SetupWithMongoDb(opts =>
-{
-    opts.MONGODB_URI = "mongo://test:pass@host/?retryWrites=true&w=majority";
-})
+eventDriven.SetupWithMongoDb(eventDriven.GetMongoOptions())
 .AddMongoRecordService<SampleRecord>()
 .AddMongoNodeService<SampleNode>();
 

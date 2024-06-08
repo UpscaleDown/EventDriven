@@ -12,4 +12,10 @@ public static class Errors
     public static readonly string InvalidFilterMessage = "Filter requires Field, Operation and Value to be set before use.";
     #endregion
 
+    #region Options errors
+
+    public const string OptionsErrorCode = "OPT0001";
+    public const string OptionsErrorMessage = "The following option was not provided: {0}";
+    #endregion
+
 }

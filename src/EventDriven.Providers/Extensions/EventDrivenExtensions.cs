@@ -5,13 +5,10 @@ using UpscaleDown.EventDriven.Providers.Data.Mongo;
 using UpscaleDown.EventDriven.Providers.Data.Mongo.Configuration;
 using UpscaleDown.EventDriven.Providers.Event.RabbitMQ;
 using UpscaleDown.EventDriven.Architecture.Extensions;
-<<<<<<< Updated upstream
 using UpscaleDown.EventDriven.Core;
-=======
-using UpscaleDown.EventDriven.Events.Interfaces;
-using Microsoft.Extensions.Configuration;
 using UpscaleDown.EventDriven.Exceptions;
->>>>>>> Stashed changes
+using Microsoft.Extensions.Configuration;
+using UpscaleDown.EventDriven.Events;
 
 namespace UpscaleDown.EventDriven.Providers.Extensions;
 

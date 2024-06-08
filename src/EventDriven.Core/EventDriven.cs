@@ -2,11 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UpscaleDown.EventDriven.Architecture.Configuration;
-<<<<<<< Updated upstream
-=======
-using UpscaleDown.EventDriven.Core.Extensions;
 using UpscaleDown.EventDriven.Exceptions;
->>>>>>> Stashed changes
 
 namespace UpscaleDown.EventDriven.Core;
 
@@ -40,17 +36,8 @@ public class EventDriven
         App = Builder.Build();
         return App;
     }
-<<<<<<< Updated upstream
-=======
 
-    public IServiceProvider GetServiceProvider()
-    {
-        return App.Services;
-    }
-
-    public IConfiguration GetConfiguration()
-    {
+    public IConfiguration GetConfiguration(){
         return Builder.Configuration;
     }
->>>>>>> Stashed changes
 }

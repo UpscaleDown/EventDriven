@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UpscaleDown.EventDriven.Architecture.Configuration;
+using UpscaleDown.EventDriven.Core.Extensions;
 using UpscaleDown.EventDriven.Exceptions;
 
 namespace UpscaleDown.EventDriven.Core;
@@ -28,6 +29,7 @@ public class EventDriven
 
         builder.Services.AddSingleton(options);
         var ev = new EventDriven(options, builder);
+        ev.AddServices(options);
         return ev;
     }
 
@@ -39,5 +41,9 @@ public class EventDriven
 
     public IConfiguration GetConfiguration(){
         return Builder.Configuration;
+    }
+
+    public EventDrivenOptions GetOptions(){
+        return _options;
     }
 }

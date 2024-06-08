@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\EventDriven.Architecture\EventDriven.Architecture.csproj" />
     <ProjectReference Include="..\..\src\EventDriven.Providers\EventDriven.Providers.csproj" />
+    <ProjectReference Include="..\..\src\EventDriven.Core\EventDriven.Core.csproj" />
   </ItemGroup>
 
 </Project>

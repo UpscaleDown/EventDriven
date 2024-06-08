@@ -21,6 +21,7 @@ public static class IServiceCollectionExtensions
     where TNodeRecord : INodeRecord
     where TRepository : class, INodeRepository<TNodeRecord>
     {
+        services.AddScoped<IRecordRepository<TNodeRecord>, TRepository>();
         services.AddScoped<INodeRepository<TNodeRecord>, TRepository>();
         services.AddScoped<INodeService<TNodeRecord>, NodeService<TNodeRecord>>();
         return services;

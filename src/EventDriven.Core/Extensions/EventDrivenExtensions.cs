@@ -78,7 +78,7 @@ public static class EventDrivenExtensions
 
     static void AddSwaggerDocumentation(SwaggerGenOptions o)
     {
-        var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        var xmlFilename = $"{Assembly.GetCallingAssembly().GetName().Name}.xml";
         o.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
     }
     public static void Run(this EventDriven ev)
@@ -86,7 +86,7 @@ public static class EventDrivenExtensions
         var app = ev.Build();
 
         // DataManager.Init(builder.Configuration);
-        var basePath = "/api/gatekeeper";
+        var basePath = "/api/" + ev.GetOptions().Origin;
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
@@ -110,7 +110,7 @@ public static class EventDrivenExtensions
 
         var ct = new CancellationTokenSource();
         var consumersTask = app.StartEventConsumers(ct.Token);
-        app.Run();
+        app.Run("http://*:8080");
         ct.Cancel();
 
     }

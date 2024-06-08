@@ -28,6 +28,8 @@ public class EventDriven
 
         builder.Services.AddSingleton(options);
         var ev = new EventDriven(options, builder);
+        ev.AddServices(options);
+        builder.Services.AddSingleton(ev);
         return ev;
     }
 
@@ -36,8 +38,11 @@ public class EventDriven
         App = Builder.Build();
         return App;
     }
-
     public IConfiguration GetConfiguration(){
         return Builder.Configuration;
+}
+    public IServiceProvider GetServiceProvider()
+    {
+        return App.Services;
     }
 }

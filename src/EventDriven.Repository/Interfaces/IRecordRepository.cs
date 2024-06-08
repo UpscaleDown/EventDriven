@@ -26,4 +26,7 @@ public interface IRecordRepository<T> where T : IRecord
     public Task DeleteManyAsync(IEnumerable<T> records);
     public void DeleteMany(IEnumerable<string> ids);
     public Task DeleteManyAsync(IEnumerable<string> ids);
+
+    public IEnumerable<FinalType> Query<FinalType>(Func<FinalType, bool> exp) where FinalType : T;
+    public Task<IEnumerable<FinalType>> QueryAsync<FinalType>(Func<FinalType, bool> exp) where FinalType : T;
 }

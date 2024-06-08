@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using UpscaleDown.EventDriven.Architecture.Configuration;
-using UpscaleDown.EventDriven.Events;
+using UpscaleDown.EventDriven.Events.Interfaces;
 
 namespace UpscaleDown.EventDriven.Core.Extensions;
 
@@ -127,5 +127,11 @@ public static class EventDrivenExtensions
         }
         Task.WaitAll(tasks.ToArray(), token);
         return Task.CompletedTask;
+    }
+
+    public static void AddEventHandler<T, TImplementation>(this EventDriven ev, string eventType)
+    where TImplementation : class, IEventHandler<T>
+    {
+        ev.Builder.Services.AddKeyedScoped<IEventHandler<T>, TImplementation>(eventType);
     }
 }

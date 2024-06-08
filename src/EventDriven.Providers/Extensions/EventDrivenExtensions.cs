@@ -1,12 +1,17 @@
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
 using UpscaleDown.EventDriven.Repository.Interfaces.Entities;
-using UpscaleDown.EventDriven.Events;
 using UpscaleDown.EventDriven.Providers.Data.Mongo;
 using UpscaleDown.EventDriven.Providers.Data.Mongo.Configuration;
 using UpscaleDown.EventDriven.Providers.Event.RabbitMQ;
 using UpscaleDown.EventDriven.Architecture.Extensions;
+<<<<<<< Updated upstream
 using UpscaleDown.EventDriven.Core;
+=======
+using UpscaleDown.EventDriven.Events.Interfaces;
+using Microsoft.Extensions.Configuration;
+using UpscaleDown.EventDriven.Exceptions;
+>>>>>>> Stashed changes
 
 namespace UpscaleDown.EventDriven.Providers.Extensions;
 
@@ -27,6 +32,15 @@ public static class EventDrivenExtensions
         _mongoSetup = true;
         return ev;
     }
+    public static Core.EventDriven SetupWithMongoDb(this Core.EventDriven ev, MongoDbOptions opts)
+    {
+        var services = ev.Services;
+        services.AddSingleton(opts);
+        var client = new MongoClient(opts.MONGODB_URI);
+        services.AddSingleton(client);
+        _mongoSetup = true;
+        return ev;
+    }
     public static Core.EventDriven AddMongoRecordService<T>(this Core.EventDriven ev)
     where T : IRecord
     {
@@ -43,6 +57,16 @@ public static class EventDrivenExtensions
         if (!_mongoSetup) throw new MongoConfigurationException("You must setup mongo before adding services");
         services.AddNodeRecordServices<T, MongoNodeRepository<T>>();
         return ev;
+    }
+
+    public static MongoDbOptions GetMongoOptions(this Core.EventDriven ev)
+    {
+        var configuration = ev.GetConfiguration();
+
+        var options = configuration.GetSection("MongoDbOptions").Get<MongoDbOptions>() ??
+        throw new OptionsNotFoundException<MongoDbOptions>(Errors.OptionsErrorCode, Errors.OptionsErrorMessage);
+
+        return options;
     }
     #endregion
     #region Rabbit
